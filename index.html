@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>โหวตทีม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- decorative background shapes -->
+<div class="deco" aria-hidden="true">
+  <svg class="d d-spark1" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+  <svg class="d d-spark2" viewBox="0 0 24 24"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+  <svg class="d d-aster" viewBox="0 0 24 24"><g stroke-width="2.6" stroke-linecap="round"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7"/></g></svg>
+  <svg class="d d-burst" viewBox="0 0 24 24"><polygon points="24,12 18,14.49 20.49,20.49 14.49,18 12,24 9.51,18 3.51,20.49 6,14.49 0,12 6,9.51 3.51,3.51 9.51,6 12,0 14.49,6 20.49,3.51 18,9.51"/></svg>
+  <svg class="d d-swirl" viewBox="0 0 260 80"><path d="M4 56C34 8 70 8 84 40S136 76 150 44 128 4 108 24 124 74 170 62 230 18 256 30" fill="none" stroke-width="2.2" stroke-linecap="round"/></svg>
+  <span class="dot dot1"></span><span class="dot dot2"></span><span class="dot dot3"></span><span class="dot dot4"></span>
+</div>
+
+<header class="top"><div class="top-in">
+  <div class="brand"><span class="brand-dot"></span><span id="brand">โหวตทีม</span></div>
+  <nav class="nav" aria-label="หน้า">
+    <button data-view="vote" aria-current="page">โหวต</button>
+    <button data-view="results">ผลโหวต</button>
+    <button data-view="admin" id="navAdmin" hidden>จัดการ</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <div id="notice" class="notice" role="status" hidden>
+    <span class="chip chip-pink" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.2v.1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+    <span id="noticeText"></span>
+  </div>
+
+  <!-- VOTE -->
+  <section id="v-vote">
+    <div class="hero">
+      <div>
+        <h1 id="voteTitle">โหวตทีมที่ชอบ</h1>
+        <p class="sub">แตะชื่อทีมเพื่อโหวต คนละ 1 เสียง เปลี่ยนใจได้จนกว่าจะปิดโหวต</p>
+      </div>
+      <div class="tally"><span class="live" aria-hidden="true"></span><b id="total1" class="tnum">0</b><span>เสียง</span></div>
+    </div>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="q" class="search" type="search" placeholder="ค้นหาชื่อหรือเลขทีม" autocomplete="off">
+    </div>
+    <div id="grid"></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="v-results" hidden>
+    <!-- ส่วนสรุป: พอดีหนึ่งหน้าจอ -->
+    <div class="board">
+      <div class="hero">
+        <div>
+          <h1 id="resTitle">ผลโหวต</h1>
+          <p class="livechip"><span class="live" aria-hidden="true"></span> อัปเดตสดอัตโนมัติ</p>
+        </div>
+        <div class="bigtotal"><b id="total2" class="tnum">0</b><span>เสียงทั้งหมด</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="podium" id="podium"></div>
+        <aside class="side">
+          <span class="pill-mint">Scan me</span>
+          <div class="qrframe"><div class="qr" id="qrSide"></div></div>
+          <p>สแกนเพื่อโหวต</p>
+        </aside>
+      </div>
+
+      <a class="morelink" href="#ranksHead">ดูอันดับทั้งหมด
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <h2 class="sec" id="ranksHead">อันดับทั้งหมด</h2>
+    <div class="ranks" id="ranks"></div>
+  </section>
+
+  <!-- ADMIN -->
+  <section id="v-admin" hidden>
+    <h1>จัดการ<mark>โหวต</mark></h1>
+    <p class="sub">หน้านี้เห็นเฉพาะเจ้าของและผู้แก้ไข</p>
+    <div class="panels">
+      <div class="panel qrbig">
+        <h2 class="sec">QR สำหรับให้คนสแกน</h2>
+        <p class="hint">พิมพ์ติดหน้างาน หรือเปิดแท็บผลโหวตขึ้นจอ จะมี QR อยู่ข้าง ๆ</p>
+        <div class="qrframe"><div class="qr" id="qrAdmin"></div></div>
+        <p class="link" id="linkText"></p>
+        <div class="row" style="justify-content:center"><button class="btn soft" id="copyLink">คัดลอกลิงก์</button></div>
+      </div>
+      <div class="panel">
+        <h2 class="sec">สถานะการโหวต</h2>
+        <div class="switch"><span class="status" id="statusText">เปิดรับโหวต</span></div>
+        <div class="row"><button class="btn primary" id="toggleOpen">ปิดโหวต</button></div>
+        <h2 class="sec" style="margin-top:26px">ชื่องาน</h2>
+        <input class="field" id="titleInput" maxlength="80">
+        <div class="row"><button class="btn primary" id="saveTitle">บันทึกชื่องาน</button></div>
+        <h2 class="sec" style="margin-top:26px">ล้างผลโหวต</h2>
+        <p class="hint">ลบเสียงโหวตทั้งหมดเพื่อเริ่มใหม่ ย้อนกลับไม่ได้</p>
+        <button class="btn warn" id="resetVotes">ล้างผลโหวตทั้งหมด</button>
+        <p class="msg" id="settingsMsg"></p>
+      </div>
+      <div class="panel wide">
+        <h2 class="sec">รายชื่อทีม <span class="msg" id="teamCount"></span></h2>
+        <p class="hint">บรรทัดละ 1 ทีม เรียงตามเลขทีม ทีมที่ชื่อเดิมจะเก็บคะแนนไว้ ทีมที่ลบออกจะไม่ถูกนับคะแนน</p>
+        <textarea class="field" id="names" spellcheck="false"></textarea>
+        <p class="dupes" id="dupes"></p>
+        <div class="row"><button class="btn primary" id="saveNames">บันทึกรายชื่อทีม</button><span class="msg" id="namesMsg"></span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="dock" id="dock" hidden>
+  <span class="chip chip-pink" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  <p>คุณโหวตให้ <b id="dockTeam"></b></p>
+</div>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <div class="burst" id="burst"></div>
+    <div class="badge tnum" id="mBadge"></div>
+    <h2 id="mName"></h2>
+    <p class="meta" id="mMeta"></p>
+    <button class="btn cta" id="mVote">โหวตทีมนี้</button>
+    <button class="btn ghost" id="mClose">ปิด</button>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/qr.js"></script>
+<script src="assets/js/backend.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
